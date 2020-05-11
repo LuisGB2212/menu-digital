@@ -22,6 +22,8 @@
         <!-- END: Vendor CSS-->
 
         <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/select/select2.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/spinner/jquery.bootstrap-touchspin.css') }}">
+        
         <!-- BEGIN: Theme CSS-->
         <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/bootstrap.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/bootstrap-extended.css') }}">
@@ -366,6 +368,8 @@
         <script src="{{ asset('app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js') }}"></script>
         <!-- END: Page Vendor JS-->
         <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}"></script>
+        <script src="{{ asset('app-assets/vendors/js/forms/spinner/jquery.bootstrap-touchspin.js') }}"></script>
+
         <!-- BEGIN: Theme JS-->
         <script src="{{ asset('app-assets/js/core/app-menu.js') }}"></script>
         <script src="{{ asset('app-assets/js/core/app.js') }}"></script>

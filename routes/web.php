@@ -26,4 +26,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function() {
 	Route::resource('branch-offices', 'backend\BranchOfficeController');
 	Route::resource('categories', 'backend\CategoryController');
 	Route::resource('menus', 'backend\MenuController');
+	Route::resource('areas', 'backend\AreaController');
+	Route::resource('tables', 'backend\TableController');
+	Route::resource('ingredients', 'backend\IngredientController');
+	Route::resource('branch-office-ingredients', 'backend\BranchOfficeIngredientController');
+
 });

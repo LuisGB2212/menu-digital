@@ -28,6 +28,7 @@
                                         <th>Nombre</th>
                                         <th>Precio</th>
                                         <th>Descripción</th>
+                                        <th>Sucursales</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
@@ -38,6 +39,11 @@
                                            <td>{{$menu->name}}</td>
                                            <td>${{number_format($menu->price,2,'.',',')}}</td>
                                            <td>{{$menu->description}}</td>
+                                           <td>
+                                               @foreach ($menu->menuBranchOffices as $menuBranchOffice)
+                                                   {{$menuBranchOffice->branchOffice->branch_office_name}},
+                                               @endforeach
+                                           </td>
                                            <td>
                                                 <button type="button" onclick="data_user({{$menu->id}})" class="btn btn-info mr-1 mb-1 waves-effect waves-light" data-toggle="modal" data-target="#data_user">
                                                     <i class="fa fa-eye"></i>

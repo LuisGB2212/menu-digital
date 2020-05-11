@@ -20,7 +20,6 @@
                                         <th>#</th>
                                         <th>Tipo de alimento</th>
                                         <th>Cantidad</th>
-                                        <th>Sucursales</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
@@ -30,9 +29,6 @@
                                            <td>{{$category->id}}</td>
                                            <td>{{$category->category_name}}</td>
                                            <td>{{$category->menus->count()}}</td>
-                                           <td>
-                                               
-                                           </td>
                                            <td>
                                                 <a class="btn btn-info mr-1 mb-1 waves-effect waves-light" href="{{ route('categories.show',$category->id.'?restaurant_id='.$restaurant->id) }}">
                                                     <i class="fa fa-eye"></i>

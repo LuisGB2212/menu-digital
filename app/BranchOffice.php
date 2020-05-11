@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Area;
+use App\BranchOfficeIngredient;
 use App\MenuBranchOffice;
 use App\User;
 use App\UserBranchOffice;
@@ -29,4 +31,15 @@ class BranchOffice extends Model
     {
         return $this->hasMany(MenuBranchOffice::class);
     }
+
+    public function areas()
+    {
+        return $this->hasMany(Area::class);
+    }
+
+    public function branchOfficeIngredients()
+    {
+        return $this->hasMany(BranchOfficeIngredient::class);
+    }
+
 }

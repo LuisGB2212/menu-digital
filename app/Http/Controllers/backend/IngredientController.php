@@ -2,21 +2,23 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\Food;
-use App\FoodType;
 use App\Http\Controllers\Controller;
+use App\Ingredient;
+use App\Restaurant;
 use Illuminate\Http\Request;
 
-class FoodController extends Controller
+class IngredientController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        
+        $restaurant = Restaurant::findOrFail($request->restaurant_id);
+        //return $restaurant;
+        return view('backend.ingredients.list_ingredients',compact('restaurant'));
     }
 
     /**
@@ -26,8 +28,9 @@ class FoodController extends Controller
      */
     public function create(Request $request)
     {
-        $foodType = FoodType::findOrFail($request->foodType_id);
-        return view('backend.foods.create_food',compact('foodType'));
+        $restaurant = Restaurant::findOrFail($request->restaurant_id);
+        //return $restaurant;
+        return view('backend.ingredients.create_ingredient',compact('restaurant'));
     }
 
     /**
@@ -39,24 +42,23 @@ class FoodController extends Controller
     public function store(Request $request)
     {
         $this->validate(request(),[
-            'food_price' => 'required',
-            'food_name' => 'required',
-            'food_description' => 'required',
-            'food_type_id' => 'required'
+            'ingredient_name' => 'required',
+            'ingredient_unit' => 'required',
+            'restaurant_id' => 'required'
         ]);
 
-        $food = Food::create($request->all());
+        $ingredient = Ingredient::create($request->all());
 
-        return response()->json(['message' => 'success','food' => $food]);
+        return response()->json(['message' => 'success','ingredient' => $ingredient]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Food  $food
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Food $food)
+    public function show($id)
     {
         //
     }
@@ -64,10 +66,10 @@ class FoodController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Food  $food
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Food $food)
+    public function edit($id)
     {
         //
     }
@@ -76,10 +78,10 @@ class FoodController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Food  $food
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Food $food)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -87,10 +89,10 @@ class FoodController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Food  $food
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Food $food)
+    public function destroy($id)
     {
         //
     }

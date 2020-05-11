@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\FoodType;
+use App\Area;
 use App\Http\Controllers\Controller;
-use App\Restaurant;
+use App\Table;
 use Illuminate\Http\Request;
 
-class FoodTypeController extends Controller
+class TableController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class FoodTypeController extends Controller
      */
     public function index(Request $request)
     {
-        $restaurant = Restaurant::findOrFail($request->restaurant);
-        return view('backend.foodTypes.list_foodTypes',compact('restaurant'));
+        $area = Area::findOrFail($request->area_id);
+        return view('backend.tables.list_tables',compact('area'));
     }
 
     /**
@@ -27,8 +27,8 @@ class FoodTypeController extends Controller
      */
     public function create(Request $request)
     {
-        $restaurant = Restaurant::findOrFail($request->restaurant_id);
-        return view('backend.foodTypes.create_foodType',compact('restaurant'));
+        $area = Area::findOrFail($request->area_id);   
+        return view('backend.tables.create_table',compact('area'));
     }
 
     /**
@@ -40,37 +40,44 @@ class FoodTypeController extends Controller
     public function store(Request $request)
     {
         $this->validate(request(),[
-            'restaurant_id',
-            'type_name',
+            'table_number' => 'required',
+            'area_id' => 'required',
         ]);
 
-        $foodType = FoodType::create([
-            'restaurant_id' => $request->restaurant_id,
-            'type_name' => $request->type_name,
-        ]);
 
-        return response()->json(['message' => 'success','foodType' => $foodType ]);
+        $area = Area::findOrFail($request->area_id);
+        if (isset($request->table_number)) {
+            $coutTables = $area->tables->count()+1;
+            for ($i=0; $i < $request->table_number ; $i++) { 
+
+                $tables = Table::create([
+                    'table_name' => str_replace(" ", "",$area->area_name."-Mesa-".($coutTables)),
+                    'area_id' => $area->id
+                ]);
+                $coutTables++;
+            }
+        }
+        return response()->json(['message' => 'success','area' => $area ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\FoodType  $foodType
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(FoodType $foodType,Request $request)
+    public function show($id)
     {
-        //return $foodType;
-        return view('backend.foodTypes.view_type_food',compact('foodType'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\FoodType  $foodType
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(FoodType $foodType)
+    public function edit($id)
     {
         //
     }
@@ -79,10 +86,10 @@ class FoodTypeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\FoodType  $foodType
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, FoodType $foodType)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -90,10 +97,10 @@ class FoodTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\FoodType  $foodType
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(FoodType $foodType)
+    public function destroy($id)
     {
         //
     }

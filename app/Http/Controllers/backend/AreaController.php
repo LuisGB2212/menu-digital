@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\backend;
 
+use App\Area;
 use App\BranchOffice;
 use App\Http\Controllers\Controller;
-use App\Restaurant;
+use App\Table;
 use Illuminate\Http\Request;
 
-class BranchOfficeController extends Controller
+class AreaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +17,8 @@ class BranchOfficeController extends Controller
      */
     public function index(Request $request)
     {
-        $branch_offices = BranchOffice::where('restaurant_id',$request->restaurant)->get();
-        $restaurant = Restaurant::findOrFail($request->restaurant);
-        //return $restaurant_users;
-        return view('backend.branch_offices.list_branch_offices',compact('branch_offices','restaurant'));
+        $branchOffice = BranchOffice::findOrFail($request->branch_office_id);
+        return view('backend.areas.list_areas',compact('branchOffice'));
     }
 
     /**
@@ -29,8 +28,8 @@ class BranchOfficeController extends Controller
      */
     public function create(Request $request)
     {
-        $restaurant = Restaurant::findOrFail($request->restaurant);
-        return view('backend.branch_offices.create_branch_office',compact('restaurant'));
+        $branchOffice = BranchOffice::findOrFail($request->branch_office_id);   
+        return view('backend.areas.create_area',compact('branchOffice'));
     }
 
     /**
@@ -42,34 +41,41 @@ class BranchOfficeController extends Controller
     public function store(Request $request)
     {
         $this->validate(request(),[
-            'branch_office_name' => 'required',
-            'restaurant_id' => 'required'
+            'area_name' => 'required',
+            'branch_office_id' => 'required',
         ]);
 
-        $branchOffice = BranchOffice::create($request->all());
-        
-        return redirect()->back();
+
+        $area = Area::create($request->all());
+        if (isset($request->table_number)) {
+            for ($i=0; $i < $request->table_number ; $i++) { 
+                $tables = Table::create([
+                    'table_name' => str_replace(" ", "",$area->area_name."-Mesa-".($i+1)),
+                    'area_id' => $area->id
+                ]);
+            }
+        }
+        return response()->json(['message' => 'success','area' => $area ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\BranchOffice  $branchOffice
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(BranchOffice $branchOffice)
+    public function show($id)
     {
-        //return $branchOffice;
-        return view('backend.branch_offices.view_branch_office',compact('branchOffice'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\BranchOffice  $branchOffice
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(BranchOffice $branchOffice)
+    public function edit($id)
     {
         //
     }
@@ -78,10 +84,10 @@ class BranchOfficeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\BranchOffice  $branchOffice
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BranchOffice $branchOffice)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -89,10 +95,10 @@ class BranchOfficeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\BranchOffice  $branchOffice
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BranchOffice $branchOffice)
+    public function destroy($id)
     {
         //
     }

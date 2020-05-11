@@ -6,39 +6,45 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Categorías de alimentos registrados en {{$restaurant->restaurant_name}}</h4>
+                    <h4 class="card-title">Ingredientes</h4>
                 </div>
                 <div class="card-content">
                     <div class="card-body card-dashboard">
                         <div class="mb-3" align="right">
-                            <a href="{{ route('food-types.create','restaurant_id='.$restaurant->id) }}" class="btn btn-success mr-1 mb-1 waves-effect waves-light">Agregar categoría</a>
+                            <a href="{{ route('ingredients.create','restaurant_id='.$restaurant->id) }}" class="btn btn-success mr-1 mb-1 waves-effect waves-light">Agregar Ingrediente</a>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-striped dataex-html5-selectors">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Tipo de alimento</th>
-                                        <th>Cantidad</th>
+                                        <th>Nombre</th>
+                                        <th>Presentación</th>
+                                        <th>Cantidad x Sucursal</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   @foreach ($restaurant->foodTypes as $foodType)
+                                   @foreach ($restaurant->ingredients as $ingredient)
                                        <tr>
-                                           <td>{{$foodType->id}}</td>
-                                           <td>{{$foodType->type_name}}</td>
-                                           <td>{{$foodType->foods->count()}}</td>
+                                           <td>{{$ingredient->id}}</td>
+                                           <td>{{$ingredient->ingredient_name}}</td>
+                                           <td>{{$ingredient->ingredient_unit}}</td>
                                            <td>
-                                                <a class="btn btn-info mr-1 mb-1 waves-effect waves-light" href="{{ route('food-types.show',$foodType->id.'?restaurant_id='.$restaurant->id) }}">
+                                                @foreach ($ingredient->branchOfficeIngredients as $branchOfficeIngredient)
+                                                    [{{$branchOfficeIngredient->branchOffice->branch_office_name}} = {{$branchOfficeIngredient->entryIngredients->last()->balance.' '.$ingredient->ingredient_unit}}] <br>
+                                                @endforeach
+                                           </td>
+                                           <td>
+                                                {{-- <a class="btn btn-info mr-1 mb-1 waves-effect waves-light" href="{{ route('categories.show',$category->id.'?restaurant_id='.$restaurant->id) }}">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
-                                                <a href="{{ url('admin/restaurant-users/'.$foodType->id.'/edit?restaurant_id='.$restaurant->id) }}" class="btn btn-warning mr-1 mb-1 waves-effect waves-light">
+                                                <a href="{{ url('admin/restaurant-users/'.$category->id.'/edit?restaurant_id='.$restaurant->id) }}" class="btn btn-warning mr-1 mb-1 waves-effect waves-light">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
                                                 <button type="button" class="btn btn-danger mr-1 mb-1 waves-effect waves-light">
                                                     <i class="fa fa-trash"></i>
-                                                </button>
+                                                </button> --}}
                                            </td>
                                        </tr>
                                    @endforeach

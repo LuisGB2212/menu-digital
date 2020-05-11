@@ -4,6 +4,7 @@ namespace App;
 
 use App\Category;
 use App\FoodType;
+use App\Ingredient;
 use App\RestaurantUser;
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,4 +30,10 @@ class Restaurant extends Model
     {
         return $this->hasMany(Category::class);
     }
+
+    public function ingredients()
+    {
+        return $this->hasMany(Ingredient::class);
+    }
+
 }
