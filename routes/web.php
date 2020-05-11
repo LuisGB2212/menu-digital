@@ -24,6 +24,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function() {
 	Route::resource('restaurants', 'backend\RestaurantController');
 	Route::resource('restaurant-users', 'backend\RestaurantUserController');
 	Route::resource('branch-offices', 'backend\BranchOfficeController');
-	Route::resource('food-types', 'backend\FoodTypeController');
-	Route::resource('foods', 'backend\FoodController');
+	Route::resource('categories', 'backend\CategoryController');
+	Route::resource('menus', 'backend\MenuController');
 });

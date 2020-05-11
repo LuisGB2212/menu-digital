@@ -21,6 +21,7 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/extensions/shepherd-theme-default.css') }}">
         <!-- END: Vendor CSS-->
 
+        <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/select/select2.min.css') }}">
         <!-- BEGIN: Theme CSS-->
         <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/bootstrap.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/bootstrap-extended.css') }}">
@@ -315,12 +316,6 @@
                             <span class="menu-title" data-i18n="Email">Restaurant's</span>
                         </a>
                     </li>
-                    <li class=" nav-item">
-                        <a href="{{ route('restaurants.index') }}">
-                            <i class="fa fa-cutlery"></i>
-                            <span class="menu-title" data-i18n="Email">Restaurant's</span>
-                        </a>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -370,7 +365,7 @@
         <script src="{{ asset('app-assets/vendors/js/tables/datatable/buttons.bootstrap.min.js') }}"></script>
         <script src="{{ asset('app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js') }}"></script>
         <!-- END: Page Vendor JS-->
-
+        <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}"></script>
         <!-- BEGIN: Theme JS-->
         <script src="{{ asset('app-assets/js/core/app-menu.js') }}"></script>
         <script src="{{ asset('app-assets/js/core/app.js') }}"></script>

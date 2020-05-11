@@ -11,7 +11,7 @@
                 <div class="card-content">
                     <div class="card-body card-dashboard">
                         <div class="mb-3" align="right">
-                            <a href="{{ route('food-types.create','restaurant_id='.$restaurant->id) }}" class="btn btn-success mr-1 mb-1 waves-effect waves-light">Agregar categoría</a>
+                            <a href="{{ route('categories.create','restaurant_id='.$restaurant->id) }}" class="btn btn-success mr-1 mb-1 waves-effect waves-light">Agregar categoría</a>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-striped dataex-html5-selectors">
@@ -20,20 +20,24 @@
                                         <th>#</th>
                                         <th>Tipo de alimento</th>
                                         <th>Cantidad</th>
+                                        <th>Sucursales</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   @foreach ($restaurant->foodTypes as $foodType)
+                                   @foreach ($restaurant->categories as $category)
                                        <tr>
-                                           <td>{{$foodType->id}}</td>
-                                           <td>{{$foodType->type_name}}</td>
-                                           <td>{{$foodType->foods->count()}}</td>
+                                           <td>{{$category->id}}</td>
+                                           <td>{{$category->category_name}}</td>
+                                           <td>{{$category->menus->count()}}</td>
                                            <td>
-                                                <a class="btn btn-info mr-1 mb-1 waves-effect waves-light" href="{{ route('food-types.show',$foodType->id.'?restaurant_id='.$restaurant->id) }}">
+                                               
+                                           </td>
+                                           <td>
+                                                <a class="btn btn-info mr-1 mb-1 waves-effect waves-light" href="{{ route('categories.show',$category->id.'?restaurant_id='.$restaurant->id) }}">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
-                                                <a href="{{ url('admin/restaurant-users/'.$foodType->id.'/edit?restaurant_id='.$restaurant->id) }}" class="btn btn-warning mr-1 mb-1 waves-effect waves-light">
+                                                <a href="{{ url('admin/restaurant-users/'.$category->id.'/edit?restaurant_id='.$restaurant->id) }}" class="btn btn-warning mr-1 mb-1 waves-effect waves-light">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
                                                 <button type="button" class="btn btn-danger mr-1 mb-1 waves-effect waves-light">

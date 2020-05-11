@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\MenuBranchOffice;
 use App\User;
 use App\UserBranchOffice;
 use Illuminate\Database\Eloquent\Model;
@@ -24,4 +25,8 @@ class BranchOffice extends Model
         return $this->hasMany(User::class);
     }
 
+    public function menuBranchOffices()
+    {
+        return $this->hasMany(MenuBranchOffice::class);
+    }
 }

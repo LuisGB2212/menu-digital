@@ -28,13 +28,13 @@
                                     <div class="col-6 col-lg-6">
                                         <div class="form-group">
                                             <label for="first-name-vertical">Nombre</label>
-                                            <input type="text" class="form-control" name="type_name" placeholder="Nombre de Categoría">
+                                            <input type="text" class="form-control" name="category_name" placeholder="Nombre de Categoría">
                                         </div>
                                     </div>
                                     <input type="hidden" name="restaurant_id" value="{{$restaurant->id}}">
                                     
                                     <div class="col-12" align="right">
-                                        <a href="{{ route('food-types.index','restaurant='.$restaurant->id) }}" class="btn btn-info mr-1 mb-1">Regresar</a>
+                                        <a href="{{ route('categories.index','restaurant='.$restaurant->id) }}" class="btn btn-info mr-1 mb-1">Regresar</a>
                                         <button type="submit" class="btn btn-success mr-1 mb-1 btn_add_type">Guardar</button>
                                         <button type="reset" class="btn btn-outline-warning mr-1 mb-1">Limpar datos</button>
                                     </div>
@@ -55,13 +55,9 @@
             var form = $('#add_food_type_form'); // contact form
             var submit = $('.btn_add_type'); // submit button
             $.ajax({
-                url: '{{ route('food-types.store') }}', // form action url
+                url: '{{ route('categories.store') }}', // form action url
                 type: 'POST', // form submit method get/post
-                dataType: 'json', // request type html/json/xml
-                data: new FormData(this),
-                contentType: false,
-                cache: false,
-                processData:false,
+                data: form.serialize(),
                 beforeSend: function() {
                     //alert.html('El producto se esta guardando').fadeIn().fadeOut();
                     submit.prop('disabled', true);

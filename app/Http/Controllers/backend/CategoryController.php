@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\FoodType;
+use App\Category;
 use App\Http\Controllers\Controller;
 use App\Restaurant;
 use Illuminate\Http\Request;
 
-class FoodTypeController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ class FoodTypeController extends Controller
     public function index(Request $request)
     {
         $restaurant = Restaurant::findOrFail($request->restaurant);
-        return view('backend.foodTypes.list_foodTypes',compact('restaurant'));
+        return view('backend.categories.list_categories',compact('restaurant'));
     }
 
     /**
@@ -28,7 +28,7 @@ class FoodTypeController extends Controller
     public function create(Request $request)
     {
         $restaurant = Restaurant::findOrFail($request->restaurant_id);
-        return view('backend.foodTypes.create_foodType',compact('restaurant'));
+        return view('backend.categories.create_category',compact('restaurant'));
     }
 
     /**
@@ -41,36 +41,32 @@ class FoodTypeController extends Controller
     {
         $this->validate(request(),[
             'restaurant_id',
-            'type_name',
+            'category_name',
         ]);
 
-        $foodType = FoodType::create([
-            'restaurant_id' => $request->restaurant_id,
-            'type_name' => $request->type_name,
-        ]);
+        $category = Category::create($request->all());
 
-        return response()->json(['message' => 'success','foodType' => $foodType ]);
+        return response()->json(['message' => 'success','category' => $category ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\FoodType  $foodType
+     * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(FoodType $foodType,Request $request)
+    public function show(Category $category)
     {
-        //return $foodType;
-        return view('backend.foodTypes.view_type_food',compact('foodType'));
+        return view('backend.categories.view_categories',compact('category'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\FoodType  $foodType
+     * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(FoodType $foodType)
+    public function edit(Category $category)
     {
         //
     }
@@ -79,10 +75,10 @@ class FoodTypeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\FoodType  $foodType
+     * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, FoodType $foodType)
+    public function update(Request $request, Category $category)
     {
         //
     }
@@ -90,10 +86,10 @@ class FoodTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\FoodType  $foodType
+     * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(FoodType $foodType)
+    public function destroy(Category $category)
     {
         //
     }

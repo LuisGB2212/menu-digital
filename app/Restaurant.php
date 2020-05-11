@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Category;
 use App\FoodType;
 use App\RestaurantUser;
 use Illuminate\Database\Eloquent\Model;
@@ -24,8 +25,8 @@ class Restaurant extends Model
         return $this->hasMany(RestaurantUser::class);
     }
 
-    public function foodTypes()
+    public function categories()
     {
-        return $this->hasMany(FoodType::class);
+        return $this->hasMany(Category::class);
     }
 }

@@ -2,14 +2,14 @@
 
 namespace App;
 
-use App\Food;
+use App\Menu;
 use App\Restaurant;
 use Illuminate\Database\Eloquent\Model;
 
-class FoodType extends Model
+class Category extends Model
 {
     protected $fillable = [
-    	'type_name',
+    	'category_name',
     	'restaurant_id'
     ];
 
@@ -18,8 +18,9 @@ class FoodType extends Model
         return $this->belongsTo(Restaurant::class);
     }
 
-    public function foods()
+    public function menus()
     {
-        return $this->hasMany(Food::class);
+        return $this->hasMany(Menu::class);
     }
+
 }
