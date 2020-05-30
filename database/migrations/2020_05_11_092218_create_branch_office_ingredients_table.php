@@ -17,6 +17,7 @@ class CreateBranchOfficeIngredientsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('ingredient_id');
             $table->unsignedBigInteger('branch_office_id');
+            $table->double('min_balance');
             $table->timestamps();
 
             $table->foreign('ingredient_id')->references('id')->on('ingredients');

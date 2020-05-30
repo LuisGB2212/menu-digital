@@ -49,9 +49,11 @@ class BranchOfficeIngredientController extends Controller
         foreach ($request->quantity as $key => $qty) {
             //return $qty[0];
             if($qty[0] != null){
+                //return $request->min_balance[$key];
                 $branch_office_ingredient = BranchOfficeIngredient::firstOrCreate([
                     'ingredient_id' => $key,
-                    'branch_office_id' => $request->branch_office_id
+                    'branch_office_id' => $request->branch_office_id,
+                    'min_balance' => $request->min_balance[$key][0],
                 ]);
 
                 $entry_ingredient = EntryIngredient::where('branch_office_ingredient_id',$branch_office_ingredient->id)->get();
@@ -61,6 +63,7 @@ class BranchOfficeIngredientController extends Controller
                         $entry_ingredient = EntryIngredient::create([
                             'quantity' => $qty[0],
                             'balance' => $qty[0],
+                            'balance_decrease' => $qty[0],
                             'branch_office_ingredient_id' => $branch_office_ingredient->id
                         ]);
                     }
@@ -68,6 +71,7 @@ class BranchOfficeIngredientController extends Controller
                     $entry_ingredient = EntryIngredient::create([
                         'quantity' => $qty[0],
                         'balance' => $qty[0],
+                        'balance_decrease' => $qty[0],
                         'branch_office_ingredient_id' => $branch_office_ingredient->id
                     ]);
                 }

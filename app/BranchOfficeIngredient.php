@@ -11,7 +11,8 @@ class BranchOfficeIngredient extends Model
 {
     protected $fillable = [
     	'ingredient_id',
-    	'branch_office_id'
+    	'branch_office_id',
+        'min_balance'
     ];
 
     public function branchOffice()

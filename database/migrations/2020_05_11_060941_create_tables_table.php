@@ -16,6 +16,8 @@ class CreateTablesTable extends Migration
         Schema::create('tables', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('table_name');
+            $table->smallInteger('table_number_packs')->nullable();
+            $table->enum('table_status',['reserved','ocupied','available','out_service'])->default('available');
             $table->unsignedBigInteger('area_id');
             $table->timestamps();
 

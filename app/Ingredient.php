@@ -3,6 +3,7 @@
 namespace App;
 
 use App\BranchOfficeIngredient;
+use App\IngredientUnit;
 use App\Restaurant;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,7 +11,7 @@ class Ingredient extends Model
 {
     protected $fillable = [
     	'ingredient_name',
-    	'ingredient_unit',
+    	'ingredient_unit_id',
     	'restaurant_id'
     ];
 
@@ -22,5 +23,10 @@ class Ingredient extends Model
     public function branchOfficeIngredients()
     {
         return $this->hasMany(BranchOfficeIngredient::class);
+    }
+
+    public function ingredientUnit()
+    {
+        return $this->belongsTo(IngredientUnit::class);
     }
 }

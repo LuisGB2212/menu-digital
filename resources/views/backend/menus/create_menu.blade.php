@@ -107,7 +107,7 @@
         $('#select_all').click(function () {
             $('input[type=checkbox]').prop('checked', $(this).prop('checked'));
         });
-
+        
         $(".type_id").select2({
             dropdownAutoWidth: true,
             width: '100%',

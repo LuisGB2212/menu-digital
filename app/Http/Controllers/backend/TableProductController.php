@@ -2,23 +2,21 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\Area;
-use App\BranchOffice;
 use App\Http\Controllers\Controller;
-use App\Table;
+use App\Menu;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 
-class AreaController extends Controller
+class TableProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $branchOffice = BranchOffice::findOrFail($request->branch_office_id);
-        return view('backend.areas.list_areas',compact('branchOffice'));
+        //
     }
 
     /**
@@ -26,10 +24,9 @@ class AreaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        $branchOffice = BranchOffice::findOrFail($request->branch_office_id);   
-        return view('backend.areas.create_area',compact('branchOffice'));
+        //
     }
 
     /**
@@ -40,23 +37,13 @@ class AreaController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate(request(),[
-            'area_name' => 'required',
-            'branch_office_id' => 'required',
-        ]);
+        //return $request->all();
 
+        $menu = Menu::findOrFail($request->menu_id);
 
-        $area = Area::create($request->all());
-        if (isset($request->table_number)) {
-            for ($i=0; $i < $request->table_number ; $i++) { 
-                $tables = Table::create([
-                    'table_name' => str_replace(" ", "",$area->area_name."-Mesa-".($i+1)),
-                    'table_number_packs' => $request->table_number_packs[$i],
-                    'area_id' => $area->id
-                ]);
-            }
-        }
-        return response()->json(['message' => 'success','area' => $area ]);
+        Cart::add($menu->id, $menu->name, 1, $menu->price,0,['comments' => $request->comments]);
+
+        return response()->json(Cart::content());
     }
 
     /**

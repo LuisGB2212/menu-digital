@@ -17,6 +17,7 @@ class CreateEntryIngredientsTable extends Migration
             $table->bigIncrements('id');
             $table->double('quantity');
             $table->double('balance');
+            $table->double('balance_decrease');
             $table->unsignedBigInteger('branch_office_ingredient_id');
             $table->timestamps();
 

@@ -29,20 +29,24 @@
                             {{csrf_field()}}
                             <div class="form-body">
                                 <div class="row justify-content-center">
-                                    <div class="col-4 col-lg-4">
+                                    <div class="col-7 col-lg-7">
                                         <div class="form-group">
                                             <label for="first-name-vertical">Nombre</label>
                                             <input type="text" class="form-control" autocomplete="false" name="area_name" placeholder="Nombre del area">
                                         </div>
                                     </div>
-                                    <div class="col-4 col-lg-4">
-                                        <div class="form-group">
-                                            <label for="first-name-vertical">Cantidad de Mesas</label>
-                                           
-                                            <div class="input-group bootstrap-touchspin">
-                                                <input type="number" class="touchspin-min-max form-control" data-bts-button-down-class="btn btn-info" data-bts-button-up-class="btn btn-info" name="table_number" value="1">
+                                    <div class="col-7 col-lg-7 ">
+                                        <div class="col-lg-12 justify-content-center d-flex">
+                                            <div class="form-group">
+                                                <label for="first-name-vertical">Cantidad de Mesas</label>
+                                               
+                                                <div class="input-group bootstrap-touchspin">
+                                                    <input type="number" class="touchspin-min-max form-control" data-bts-button-down-class="btn btn-info" data-bts-button-up-class="btn btn-info" name="table_number" id="number_table" onchange="load_number_packs()" value="1">
+                                                </div>
                                             </div>
                                         </div>
+                                        <div id="data_table_numer" class="my-1 row col-md-12"></div>
+                                        
                                     </div>
 
 
@@ -65,27 +69,40 @@
 @endsection
 @section('script')
     <script type="text/javascript">
+
+        $(document).ready(function() {
+            $('#number_table').change();
+        });
+
         $('#select_all').click(function () {
             $('input[type=checkbox]').prop('checked', $(this).prop('checked'));
         });
-          var touchspinValue = $(".touchspin-min-max"),
-            counterMin = 1;
-          if (touchspinValue.length > 0) {
+        
+        var touchspinValue = $(".touchspin-min-max"),
+        counterMin = 1;
+        if (touchspinValue.length > 0) {
             touchspinValue.TouchSpin({
-              min: counterMin,
+                min: counterMin,
+                max: 10000,
             }).on('touchspin.on.startdownspin', function () {
-              var $this = $(this);
-              $('.bootstrap-touchspin-up').removeClass("disabled-max-min");
-              if ($this.val() == counterMin) {
-                $(this).siblings().find('.bootstrap-touchspin-down').addClass("disabled-max-min");
-              }
+                var $this = $(this);
+                $('.bootstrap-touchspin-up').removeClass("disabled-max-min");
+                if ($this.val() == counterMin) {
+                    $(this).siblings().find('.bootstrap-touchspin-down').addClass("disabled-max-min");
+                }
             }).on('touchspin.on.startupspin', function () {
-              var $this = $(this);
-              $('.bootstrap-touchspin-down').removeClass("disabled-max-min");
+                var $this = $(this);
+                $('.bootstrap-touchspin-down').removeClass("disabled-max-min");
             });
-          }
+        }
 
-
+        function load_number_packs() {
+            var number_packs = $('#number_table').val();
+            $('#data_table_numer').html('');
+            for (var i = 0; i < number_packs; i++) {
+                $('#data_table_numer').append('<div class="col-lg-4">Mesa '+(i+1)+'</div><div class="col-lg-8"> <input class="form-control" type="number" placeholder="Ingrese número de packs" required name="table_number_packs[]"></div>');
+            }
+        }
 
         $(".type_id").select2({
             dropdownAutoWidth: true,

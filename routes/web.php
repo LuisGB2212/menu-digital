@@ -19,16 +19,24 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+//namespace('backend')->prefix('admin')
+Route::group(['prefix' => 'admin', 'middleware' => ['auth'], 'namespace' => 'backend'], function() {
+	Route::resource('restaurants', 'RestaurantController');
+	Route::resource('restaurant-users', 'RestaurantUserController');
+	Route::resource('branch-offices', 'BranchOfficeController');
+	Route::resource('categories', 'CategoryController');
+	Route::resource('menus', 'MenuController');
+	Route::resource('areas', 'AreaController');
+	Route::resource('tables', 'TableController');
+	Route::resource('ingredients', 'IngredientController');
+	Route::resource('branch-office-ingredients', 'BranchOfficeIngredientController');
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function() {
-	Route::resource('restaurants', 'backend\RestaurantController');
-	Route::resource('restaurant-users', 'backend\RestaurantUserController');
-	Route::resource('branch-offices', 'backend\BranchOfficeController');
-	Route::resource('categories', 'backend\CategoryController');
-	Route::resource('menus', 'backend\MenuController');
-	Route::resource('areas', 'backend\AreaController');
-	Route::resource('tables', 'backend\TableController');
-	Route::resource('ingredients', 'backend\IngredientController');
-	Route::resource('branch-office-ingredients', 'backend\BranchOfficeIngredientController');
+	Route::resource('menu-table-diners', 'MenuTableDinerController');
+	
+	Route::resource('table-products', 'TableProductController');
+
+
+	/*Ordenes*/
+	Route::resource('table-diners', 'TableDinerController');
 
 });

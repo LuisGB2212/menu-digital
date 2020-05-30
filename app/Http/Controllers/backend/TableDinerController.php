@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\Area;
 use App\BranchOffice;
+use App\Diner;
 use App\Http\Controllers\Controller;
 use App\Table;
+use App\TableDiner;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class AreaController extends Controller
+class TableDinerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +20,7 @@ class AreaController extends Controller
     public function index(Request $request)
     {
         $branchOffice = BranchOffice::findOrFail($request->branch_office_id);
-        return view('backend.areas.list_areas',compact('branchOffice'));
+        return view('backend.table_diners.view_tables',compact('branchOffice'));
     }
 
     /**
@@ -26,10 +28,9 @@ class AreaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        $branchOffice = BranchOffice::findOrFail($request->branch_office_id);   
-        return view('backend.areas.create_area',compact('branchOffice'));
+        //
     }
 
     /**
@@ -40,43 +41,53 @@ class AreaController extends Controller
      */
     public function store(Request $request)
     {
+        //return $request->all();
+
         $this->validate(request(),[
-            'area_name' => 'required',
-            'branch_office_id' => 'required',
+            'number_packs' => 'required',
+            'table_id' => 'required',
         ]);
 
+        $table = Table::findOrFail($request->table_id);
 
-        $area = Area::create($request->all());
-        if (isset($request->table_number)) {
-            for ($i=0; $i < $request->table_number ; $i++) { 
-                $tables = Table::create([
-                    'table_name' => str_replace(" ", "",$area->area_name."-Mesa-".($i+1)),
-                    'table_number_packs' => $request->table_number_packs[$i],
-                    'area_id' => $area->id
-                ]);
-            }
+
+
+        for ($i=0; $i < $request->number_packs; $i++) { 
+            $diner = Diner::create([
+                'diner_name' => ($i+1),
+                'diner_nickname' => 'Comensal '.($i+1),
+            ]);
+
+            $table_diner = TableDiner::create([
+                'diner_id' => $diner->id,
+                'table_id' => $table->id,
+            ]);
         }
-        return response()->json(['message' => 'success','area' => $area ]);
+
+        $table->table_status = 'ocupied';
+        $table->save();
+
+        return redirect('admin/menu-table-diners/'.$table->id);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\TableDiner  $tableDiner
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Table $table_diner)
     {
-        //
+        return view('backend.table_diners.table_data_status',compact('table_diner'))->render();
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\TableDiner  $tableDiner
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(TableDiner $tableDiner)
     {
         //
     }
@@ -85,10 +96,10 @@ class AreaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\TableDiner  $tableDiner
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, TableDiner $tableDiner)
     {
         //
     }
@@ -96,10 +107,10 @@ class AreaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\TableDiner  $tableDiner
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(TableDiner $tableDiner)
     {
         //
     }

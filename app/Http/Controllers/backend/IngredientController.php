@@ -4,6 +4,7 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use App\Ingredient;
+use App\IngredientUnit;
 use App\Restaurant;
 use Illuminate\Http\Request;
 
@@ -29,8 +30,9 @@ class IngredientController extends Controller
     public function create(Request $request)
     {
         $restaurant = Restaurant::findOrFail($request->restaurant_id);
+        $ingredient_units = IngredientUnit::all();
         //return $restaurant;
-        return view('backend.ingredients.create_ingredient',compact('restaurant'));
+        return view('backend.ingredients.create_ingredient',compact('restaurant','ingredient_units'));
     }
 
     /**
@@ -43,9 +45,16 @@ class IngredientController extends Controller
     {
         $this->validate(request(),[
             'ingredient_name' => 'required',
-            'ingredient_unit' => 'required',
+            'ingredient_unit_id' => 'required',
             'restaurant_id' => 'required'
         ]);
+        
+        if (!ctype_digit($request->ingredient_unit_id)) {
+            $ingredient_unit = IngredientUnit::create([
+                'ingredient_unit_name' => $request->ingredient_unit_id,
+            ]);
+            $request['ingredient_unit_id'] = $ingredient_unit->id;
+        }
 
         $ingredient = Ingredient::create($request->all());
 

@@ -10,6 +10,7 @@ class EntryIngredient extends Model
     protected $fillable = [
     	'quantity',
     	'balance',
+    	'balance_decrease',
     	'branch_office_ingredient_id'
     ];
 

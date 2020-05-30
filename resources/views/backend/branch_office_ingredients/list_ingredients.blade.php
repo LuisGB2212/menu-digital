@@ -22,34 +22,32 @@
                                             <th>Presentación</th>
                                             <th>Cantidad</th>
                                             <th>Saldo</th>
-                                            <th>Acciones</th>
+                                            <th>Cantidad en sucursal</th>
+                                            <th>Mínimo en almacén</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                        @foreach ($branchOffice->restaurant->ingredients as $ingredient)
                                             @php
+                                            $min_balance = $branchOffice->branchOfficeIngredients->where('ingredient_id',$ingredient->id)->count() > 0 ? $branchOffice->branchOfficeIngredients->where('ingredient_id',$ingredient->id)->first()->min_balance : '';
+
                                                 $balance = $branchOffice->branchOfficeIngredients->where('ingredient_id',$ingredient->id)->count() > 0 ? $branchOffice->branchOfficeIngredients->where('ingredient_id',$ingredient->id)->last()->entryIngredients->last()->balance : '';
+
                                                 $qty = $branchOffice->branchOfficeIngredients->where('ingredient_id',$ingredient->id)->count() > 0 ? $branchOffice->branchOfficeIngredients->where('ingredient_id',$ingredient->id)->last()->entryIngredients->last()->quantity : '';
                                             @endphp
                                             <tr>
                                                <td>{{$ingredient->id}}</td>
                                                <td>{{$ingredient->ingredient_name}}</td>
-                                               <td>{{$ingredient->ingredient_unit}}</td>
+                                               <td>{{$ingredient->ingredientUnit->ingredient_unit_name}}</td>
                                                <td>
                                                    {{$qty}}
                                                </td>
                                                <td>{{$balance }}</td>
                                                <td>
-                                                    <input type="number" name="quantity[{{$ingredient->id}}][]" class="form-control" value="{{$balance}}" min="{{$balance}}">
-                                                    {{-- <a class="btn btn-info mr-1 mb-1 waves-effect waves-light" href="{{ route('categories.show',$category->id.'?restaurant_id='.$restaurant->id) }}">
-                                                        <i class="fa fa-eye"></i>
-                                                    </a>
-                                                    <a href="{{ url('admin/restaurant-users/'.$category->id.'/edit?restaurant_id='.$restaurant->id) }}" class="btn btn-warning mr-1 mb-1 waves-effect waves-light">
-                                                        <i class="fa fa-edit"></i>
-                                                    </a>
-                                                    <button type="button" class="btn btn-danger mr-1 mb-1 waves-effect waves-light">
-                                                        <i class="fa fa-trash"></i>
-                                                    </button> --}}
+                                                    <input type="number" name="quantity[{{$ingredient->id}}][]" class="form-control col-lg-6" placeholder="Cantidad en sucursal" value="{{$balance}}" min="{{$balance}}">
+                                               </td>
+                                               <td>
+                                                   <input type="number" name="min_balance[{{$ingredient->id}}][]" class="form-control col-lg-6" placeholder="Mínimo en almacén" value="{{$min_balance}}">
                                                </td>
                                            </tr>
                                        @endforeach

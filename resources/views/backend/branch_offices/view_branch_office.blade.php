@@ -89,6 +89,23 @@
                 </div>
             </a>
         </div>
+        <div class="col-xl-3 col-md-4 col-sm-6">
+            <a href="{{ route('table-diners.index','branch_office_id='.$branchOffice->id) }}">
+                <div class="card text-center">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="avatar bg-rgba-info p-50 m-0 mb-1">
+                                <div class="avatar-content">
+                                    <i class="feather icon-users text-info font-medium-5"></i>
+                                </div>
+                            </div>
+                            <h2 class="text-bold-700">Comedor</h2>
+                            <p class="mb-0 line-ellipsis">{{-- {{$restaurant->restaurantUsers->count()}} --}}</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
     </div>
 </section>
 @endsection

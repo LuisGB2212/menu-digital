@@ -33,9 +33,18 @@
                                     </div>
                                     <div class="col-6 col-lg-6">
                                         <div class="form-group">
+                                            <label for="first-name-vertical">Tipo de alimento</label>
+                                            <select class="form-control ingredient_unit_id" name="ingredient_unit_id">
+                                                <option value="">Selecciona una opción</option>
+                                                @foreach ($ingredient_units as $ingredient_unit)
+                                                    <option value="{{$ingredient_unit->id}}">{{$ingredient_unit->ingredient_unit_name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        {{-- <div class="form-group">
                                             <label for="first-name-vertical">Unidad</label>
                                             <input type="text" class="form-control" name="ingredient_unit" placeholder="Nombre de Categoría">
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <input type="hidden" name="restaurant_id" value="{{$restaurant->id}}">
                                     
@@ -56,6 +65,13 @@
 @endsection
 @section('script')
     <script type="text/javascript">
+
+        $(".ingredient_unit_id").select2({
+            dropdownAutoWidth: true,
+            width: '100%',
+            tags:true,
+        });
+
         $('#add_food_type_form').on('submit', function(e) {
             e.preventDefault(); // prevent default form submit
             var form = $('#add_food_type_form'); // contact form

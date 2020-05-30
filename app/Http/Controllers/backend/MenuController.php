@@ -78,7 +78,7 @@ class MenuController extends Controller
      */
     public function show(Menu $menu)
     {
-        //
+        return view('backend.menu_table_diners.add_product',compact('menu'))->render();
     }
 
     /**
