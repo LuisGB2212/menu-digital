@@ -32,12 +32,18 @@
         <div class="col-lg-8">
             <ul class="nav nav-tabs nav-fill" id="myTab2" role="tablist">
                 @foreach ($categories as $key => $category)
+                    @php
+                        $bandera = 0;
+                    @endphp
                     @foreach ($category->menus as $menu)
                         @foreach ($branchOfficeMenus as $branchOfficeMenu)
-                            @if ($menu->id == $branchOfficeMenu->menu_id)
+                            @if ($menu->id == $branchOfficeMenu->menu_id && $bandera == 0)
                                 <li class="nav-item">
                                     <a class="nav-link {{$key == 0 ? 'active' : ''}}" data-toggle="tab" href="#table{{$category->id}}">{{$category->category_name}}</a>
                                 </li>
+                                @php
+                                    $bandera = 1;
+                                @endphp
                             @endif
                         @endforeach
                     @endforeach

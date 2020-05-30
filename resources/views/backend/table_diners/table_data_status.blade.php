@@ -21,7 +21,7 @@
 	        <a href="{{ route('menu-table-diners.show',$table_diner->id) }}" class="btn btn-info">Ver más</a>
 	        @break
 	    @default
-	            Default case...
+	         Default case...
 	@endswitch
 	
 	
