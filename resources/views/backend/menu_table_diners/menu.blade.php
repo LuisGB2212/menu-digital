@@ -1,6 +1,7 @@
 @extends('layouts.backend')
 
 @section('content')
+@include('layouts.view_command')
 <section id="column-selectors">
     <div class="row">
         <div class="col-12">
@@ -23,7 +24,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
+
+        <div class="col-lg-10">
             <ul class="nav nav-tabs nav-fill" id="myTab2" role="tablist">
                 @foreach ($categories as $key => $category)
                     @php
@@ -74,13 +76,7 @@
                 @endforeach
             </div>
         </div>
-        <div class="col-lg-4">
-            <div class="card">
-                <div class="card-body" id="list_commands">
-                    @include('backend.menu_table_diners.list_command',['table_name' => $menu_table_diner->table_name])
-                </div>
-            </div>
-        </div>
+        
     </div>
 </section>
 

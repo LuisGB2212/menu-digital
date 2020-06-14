@@ -300,6 +300,7 @@
             </div>
         </div>
     </div>
+
     <!-- END: Content-->
     @yield('modals')
 
@@ -330,6 +331,7 @@
     <script src="{{ asset('app-assets/js/core/app-menu.js') }}"></script>
     <script src="{{ asset('app-assets/js/core/app.js') }}"></script>
     <script src="{{ asset('app-assets/js/scripts/components.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts/customizer.min.js') }}"></script>
     <!-- END: Theme JS-->
 
     <script src="{{ asset('app-assets/vendors/js/tables/datatable/pdfmake.min.js') }}"></script>
