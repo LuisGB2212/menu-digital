@@ -13,7 +13,7 @@
 			<input type="hidden" name="table_id" value="{{$table_diner->id}}">
 
 			<div class="modal-footer">
-                <button type="submit" class="btn btn-success waves-effect waves-light">Abrir</button>
+                <button type="submit" class="btn btn-success waves-effect waves-light btn_diner_form">Abrir</button>
             </div>
 
 	        @break

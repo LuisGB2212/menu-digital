@@ -50,8 +50,6 @@ class TableDinerController extends Controller
 
         $table = Table::findOrFail($request->table_id);
 
-
-
         for ($i=0; $i < $request->number_packs; $i++) { 
             $diner = Diner::create([
                 'diner_name' => ($i+1),
@@ -66,6 +64,8 @@ class TableDinerController extends Controller
 
         $table->table_status = 'ocupied';
         $table->save();
+
+        return response()->json(['table' => $table]);
 
         return redirect('admin/menu-table-diners/'.$table->id);
     }

@@ -35,7 +35,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth'], 'namespace' => 'bac
 	
 	Route::resource('table-products', 'TableProductController');
 
-
 	/*Ordenes*/
 	Route::resource('table-diners', 'TableDinerController');
 

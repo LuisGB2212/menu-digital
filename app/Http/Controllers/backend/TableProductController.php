@@ -38,12 +38,12 @@ class TableProductController extends Controller
     public function store(Request $request)
     {
         //return $request->all();
-
+        $table_name = $request->instance_table;
         $menu = Menu::findOrFail($request->menu_id);
 
-        Cart::add($menu->id, $menu->name, 1, $menu->price,0,['comments' => $request->comments]);
+        Cart::instance($table_name)->add($menu->id, $menu->name, 1, $menu->price,0,['comments' => $request->comments]);
 
-        return response()->json(Cart::content());
+        return response()->json(view('backend.menu_table_diners.list_command',compact('table_name'))->render());
     }
 
     /**
@@ -88,6 +88,12 @@ class TableProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $table = explode('_', $id);
+        $row_id = $table[0];
+        $table_name = $table[1];
+        //return $table;
+
+        Cart::instance($table_name)->remove($row_id);
+        return response()->json(view('backend.menu_table_diners.list_command',compact('table_name'))->render());
     }
 }

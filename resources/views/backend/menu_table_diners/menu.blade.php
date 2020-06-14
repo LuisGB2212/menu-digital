@@ -5,31 +5,25 @@
     <div class="row">
         <div class="col-12">
             <h3>Menú</h3>
-            
-                {{-- <div class="card-footer" align="right">
-                    <a href="{{ route('restaurants.show',$restaurant->id) }}" class="btn btn-info mr-1 mb-1">Regresar</a>
-                </div> --}}
         </div>
-        <div class="col-lg-12">
+        <div class="col-lg-2">
             <div class="card">
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">
                             <span class="badge badge-pill bg-primary float-right">{{$menu_table_diner->tableDiners->count()}}</span>
-                            Comensales
+                            <strong>Comensales</strong>
                         </li>
                         @foreach ($menu_table_diner->tableDiners as $tableDiner)
                             <li class="list-group-item">
                                 {{$tableDiner->diner->diner_nickname}} <input type="radio" name="diner_id" value="{{$tableDiner->diner->id}}">
                             </li>
                         @endforeach
-
                     </ul>
-                    
                 </div>
             </div>
         </div>
-        <div class="col-lg-8">
+        <div class="col-lg-6">
             <ul class="nav nav-tabs nav-fill" id="myTab2" role="tablist">
                 @foreach ($categories as $key => $category)
                     @php
@@ -49,7 +43,7 @@
                     @endforeach
                 @endforeach
             </ul>
-            <div class="tab-content pt-1">
+            <div class="tab-content pt-1" style="height: calc(100vh - 18rem); overflow: scroll;">
                 @foreach ($categories as $key2 => $category_list)
                     <div class="tab-pane {{$key2 == 0 ? 'active' : ''}}" id="table{{$category_list->id}}">
                         <div class="row">
@@ -82,48 +76,8 @@
         </div>
         <div class="col-lg-4">
             <div class="card">
-                <div class="card-body">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <span class="badge badge-pill bg-primary float-right">{{Cart::content()->count()}}</span>
-                            Comanda
-                        </li>
-                        <table class="table table-sm table-hover">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        Nombre
-                                    </th>
-                                    <th>
-                                        Cantidad
-                                    </th>
-                                    <th>
-                                        Precio
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (Cart::content() as $content)
-                                    <tr>
-                                        <td>
-                                            <strong>{{$content->name}}</strong>
-                                            <br>
-                                            <small>{{$content->options->comments}}</small>
-                                        </td>
-                                        <td>{{$content->qty}}</td>
-                                        <td>${{number_format($content->price,2,'.',',')}}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        <li class="list-group-item">
-                            Subtotal : ${{number_format(Cart::subtotal(),2,'.',',')}}
-                        </li>
-                        <li class="list-group-item">
-                            Total : ${{number_format(Cart::total(),2,'.',',')}}
-                        </li>
-                    </ul>
-                    
+                <div class="card-body" id="list_commands">
+                    @include('backend.menu_table_diners.list_command',['table_name' => $menu_table_diner->table_name])
                 </div>
             </div>
         </div>
@@ -139,7 +93,6 @@
             <div class="modal-content">
                 <form id="add_product">
                     @csrf
-                    
                     <div class="modal-header bg-success white">
                         <h5 class="modal-title" id="myModalLabel110">Agregar Producto</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -149,6 +102,7 @@
                     <div class="modal-body">
                         <div id="info_table"></div>
                     </div>
+                    <input type="hidden" name="instance_table" value="{{$menu_table_diner->table_name}}">
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success waves-effect waves-light">Agregar</button>
                     </div>
@@ -188,7 +142,8 @@
                     submit.html('Guardando...'); // change submit button text
                 },
                 success: function(data) {
-                    console.log(data);
+                    //console.log(data);
+                    $('#list_commands').html(data);
                     form.trigger('reset');
                     submit.prop('disabled', false);
                     submit.html('Guardado'); // reset submit button text
