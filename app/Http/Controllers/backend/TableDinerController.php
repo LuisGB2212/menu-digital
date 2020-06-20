@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\backend;
 
 use App\BranchOffice;
+use App\Check;
 use App\Diner;
 use App\Http\Controllers\Controller;
 use App\Table;
@@ -49,6 +50,15 @@ class TableDinerController extends Controller
         ]);
 
         $table = Table::findOrFail($request->table_id);
+        $checks = Check::all();
+
+        $invoice = $table->id.date('d').date('m').date('y').($checks->count()+1);
+
+        //return $invoice;
+        $check = Check::create([
+            'table_id' => $table->id,
+            'invoice' => $invoice,
+        ]);
 
         for ($i=0; $i < $request->number_packs; $i++) { 
             $diner = Diner::create([
@@ -58,16 +68,16 @@ class TableDinerController extends Controller
 
             $table_diner = TableDiner::create([
                 'diner_id' => $diner->id,
-                'table_id' => $table->id,
+                'check_id' => $check->id,
             ]);
         }
-
+        
         $table->table_status = 'ocupied';
         $table->save();
 
-        return response()->json(['table' => $table]);
+        return response()->json(['check' => $check]);
 
-        return redirect('admin/menu-table-diners/'.$table->id);
+        return redirect('admin/menu-table-diners/'.$check->invoice);
     }
 
     /**

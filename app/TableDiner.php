@@ -11,7 +11,7 @@ class TableDiner extends Model
 {
     protected $fillable = [
     	'id',
-		'table_id',
+		'check_id',
 		'diner_id'
     ];
 

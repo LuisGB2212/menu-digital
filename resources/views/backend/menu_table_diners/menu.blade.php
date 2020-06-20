@@ -15,9 +15,9 @@
                             <span class="badge badge-pill bg-primary float-right">{{$menu_table_diner->tableDiners->count()}}</span>
                             <strong>Comensales</strong>
                         </li>
-                        @foreach ($menu_table_diner->tableDiners as $tableDiner)
+                        @foreach ($menu_table_diner->tableDiners as $key => $tableDiner)
                             <li class="list-group-item">
-                                {{$tableDiner->diner->diner_nickname}} <input type="radio" name="diner_id" value="{{$tableDiner->diner->id}}">
+                                {{$tableDiner->diner->diner_nickname}} <input class="table_diner" type="radio" {{$key == 0 ? 'checked' : ''}} name="diner_id" value="{{$tableDiner->diner->id}}">
                             </li>
                         @endforeach
                     </ul>
@@ -54,7 +54,7 @@
                                     @if ($menu->id == $branchOfficeMenu->menu_id)
                                         <div class="col-xl-2 col-md-3 col-sm-4">
                                             <div class="card text-center">
-                                                <a href="#" onclick="add_product({{$branchOfficeMenu->menu_id}})">
+                                                <a href="javascript:;" onclick="add_product({{$branchOfficeMenu->menu_id}})">
                                                     <div class="card-content">
                                                         <div class="avatar bg-rgba-info p-50 m-0 mb-1">
                                                             <div class="avatar-content">
@@ -71,7 +71,6 @@
                                 @endforeach
                             @endforeach
                         </div>
-                        
                     </div>
                 @endforeach
             </div>
@@ -98,6 +97,7 @@
                     <div class="modal-body">
                         <div id="info_table"></div>
                     </div>
+                    <input type="hidden" id="table_diner_id" name="table_diner_id">
                     <input type="hidden" name="instance_table" value="{{$menu_table_diner->table_name}}">
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success waves-effect waves-light">Agregar</button>
@@ -151,6 +151,21 @@
                 }
             });
         });
+        $(document).ready(function() {
+            console.log($('.table_diner'));
+            var table_diners = $('.table_diner');
+            $.each(table_diners,function(i) {
+                console.log(table_diners[i])
+                if($(table_diners[i]).prop('checked')){
+                    $('#table_diner_id').val(table_diners[i].value);
+                }
+                
+            });
+        });
 
+        $('.table_diner').on('click',function() {
+            console.log(this);
+            $('#table_diner_id').val($(this).val());
+        });
     </script>
 @endsection

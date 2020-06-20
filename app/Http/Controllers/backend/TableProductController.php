@@ -39,9 +39,10 @@ class TableProductController extends Controller
     {
         //return $request->all();
         $table_name = $request->instance_table;
+        //$table_name = 'diner'.$request->table_diner_id;
         $menu = Menu::findOrFail($request->menu_id);
 
-        Cart::instance($table_name)->add($menu->id, $menu->name, 1, $menu->price,0,['comments' => $request->comments]);
+        Cart::instance($table_name)->add($menu->id, $menu->name, 1, $menu->price,0,['comments' => $request->comments,'diner_id' => $request->table_diner_id]);
 
         return response()->json(view('backend.menu_table_diners.list_command',compact('table_name'))->render());
     }

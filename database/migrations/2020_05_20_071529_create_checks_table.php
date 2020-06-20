@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableDinersTable extends Migration
+class CreateChecksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateTableDinersTable extends Migration
      */
     public function up()
     {
-        Schema::create('table_diners', function (Blueprint $table) {
+        Schema::create('checks', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('check_id');
-            $table->unsignedBigInteger('diner_id');
+            $table->string('invoice');
+            $table->unsignedBigInteger('table_id');
             $table->timestamps();
-
-            $table->foreign('check_id')->references('id')->on('checks');
-            $table->foreign('diner_id')->references('id')->on('diners');
+            
+            $table->foreign('table_id')->references('id')->on('tables');
         });
     }
 
@@ -31,6 +30,6 @@ class CreateTableDinersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_diners');
+        Schema::dropIfExists('checks');
     }
 }

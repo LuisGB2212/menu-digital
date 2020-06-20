@@ -4,6 +4,7 @@ namespace App;
 
 use App\Category;
 use App\MenuBranchOffice;
+use App\MenuTableDiner;
 use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
@@ -25,5 +26,10 @@ class Menu extends Model
     public function menuBranchOffices()
     {
         return $this->hasMany(MenuBranchOffice::class);
+    }
+
+    public function menuTableDiner()
+    {
+        return $this->hasOne(MenuTableDiner::class);
     }
 }

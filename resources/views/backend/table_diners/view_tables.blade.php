@@ -48,7 +48,7 @@
                 },
                 success: function(data) {
                     
-                    window.location.href = '/admin/menu-table-diners/'+data.table.id
+                    window.location.href = '/admin/menu-table-diners/'+data.check.invoice
                 },
                 error: function(e) {
                     console.log(e)

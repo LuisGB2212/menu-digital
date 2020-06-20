@@ -18,7 +18,7 @@
 
 	        @break
 		@case('ocupied')
-	        <a href="{{ route('menu-table-diners.show',$table_diner->id) }}" class="btn btn-info">Ver más</a>
+	        <a href="{{ route('menu-table-diners.show',$table_diner->checks->last()->invoice) }}" class="btn btn-info">Ver más</a>
 	        @break
 	    @default
 	         Default case...

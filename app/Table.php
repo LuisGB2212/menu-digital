@@ -3,7 +3,7 @@
 namespace App;
 
 use App\Area;
-use App\TableDiner;
+use App\Check;
 use Illuminate\Database\Eloquent\Model;
 
 class Table extends Model
@@ -20,9 +20,9 @@ class Table extends Model
         return $this->belongsTo(Area::class);
     }
 
-    public function tableDiners()
+    public function checks()
     {
-        return $this->hasMany(TableDiner::class);
+        return $this->hasMany(Check::class);
     }
 
 }

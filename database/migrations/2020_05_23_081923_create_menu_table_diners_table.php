@@ -17,6 +17,8 @@ class CreateMenuTableDinersTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('menu_id');
             $table->unsignedBigInteger('table_diner_id');
+            $table->integer('quantity');
+            $table->string('comments')->nullable();
             $table->timestamps();
 
             $table->foreign('menu_id')->references('id')->on('menus');

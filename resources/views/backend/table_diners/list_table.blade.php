@@ -13,7 +13,7 @@
                 @foreach ($area_list->tables as $table)
                     <div class="col-xl-2 col-md-3 col-sm-4">
                         <div class="card text-center">
-                            <a href="#" onclick="open_table({{$table->id}})">
+                            <a href="javascript:;" onclick="open_table({{$table->id}})">
                                 <div class="card-content">
                                     <div class="card-body">
                                         <div class="avatar bg-rgba-info p-50 m-0 mb-1">
